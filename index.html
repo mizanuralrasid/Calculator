@@ -190,11 +190,14 @@ function calculate(){
 
     let resultDiv = document.getElementById("result");
     resultDiv.style.display = "block";
-    resultDiv.innerHTML = 
-        "20% Unit Tests: <span>" + p20.toFixed(2) + "</span><br>" +
-        "30% Half Yearly: <span>" + p30.toFixed(2) + "</span><br>" +
-        "50% Annual: <span>" + p50.toFixed(2) + "</span><br>" +
-        "<div class='final-row'>Final Percentage: <span>" + final + "%</span></div>";
+   let grandTotal = p20 + p30 + p50;
+
+resultDiv.innerHTML = 
+"20% Unit Tests: <span>" + p20.toFixed(2) + "</span><br>" +
+"30% Half Yearly: <span>" + p30.toFixed(2) + "</span><br>" +
+"50% Annual: <span>" + p50.toFixed(2) + "</span><br>" +
+"Grand Total: <span>" + grandTotal.toFixed(2) + "</span><br>" +
+"<div class='final-row'>Grand Percentage: <span>" + final + "%</span></div>";
 }
 </script>
 
