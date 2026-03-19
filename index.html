@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toolbox Dashboard</title>
+    <title>Toolbox Dashboard | Academic Suite</title>
     <style>
         :root {
             --primary: #4f46e5;
             --accent: #10b981;
             --warning: #f59e0b;
+            --danger: #ef4444;
             --dark: #1e293b;
             --light: #f8fafc;
+            --border: #e2e8f0;
         }
 
         body { 
@@ -27,83 +29,90 @@
         /* Header Area */
         header {
             width: 100%;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             background: white;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             text-align: center;
             margin-bottom: 30px;
         }
 
-        h1 { margin: 0; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.5px; }
-        p { color: #64748b; margin-top: 5px; }
+        h1 { margin: 0; font-size: 1.75rem; color: var(--dark); letter-spacing: -0.025em; }
+        p { color: #64748b; margin-top: 8px; font-size: 1rem; }
 
-        /* Navigation Bar */
+        /* Navigation Grid */
         .nav-grid {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1000px;
+            width: 90%;
+            max-width: 1100px;
             margin-bottom: 40px;
         }
 
         .tool-card {
             background: white;
-            border: 1px solid #e2e8f0;
-            padding: 15px 25px;
+            border: 1px solid var(--border);
+            padding: 20px;
             border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 600;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .tool-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px -5px rgba(0,0,0,0.1);
             border-color: var(--primary);
         }
 
-        .dot { height: 10px; width: 10px; border-radius: 50%; }
+        /* Status Dots */
+        .dot { height: 12px; width: 12px; border-radius: 50%; flex-shrink: 0; }
         .bg-blue { background: var(--primary); }
         .bg-green { background: var(--accent); }
-        .bg-yellow { background: var(--warning); }
+        .bg-orange { background: var(--warning); }
+        .bg-purple { background: #8b5cf6; }
 
-        /* Preview Container */
+        /* Workspace & Frame */
         #workspace {
             width: 95%;
             max-width: 1200px;
             position: relative;
-            display: none; /* Hidden until needed */
+            display: none; 
             margin-bottom: 50px;
+            animation: fadeIn 0.4s ease;
         }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .frame-header {
             background: var(--dark);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 12px 12px 0 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        #frameTitle { font-size: 0.9rem; font-weight: 500; opacity: 0.9; }
+        #frameTitle { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
 
         .close-btn {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             border: none;
             color: white;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: background 0.2s;
         }
 
-        .close-btn:hover { background: #ef4444; }
+        .close-btn:hover { background: var(--danger); }
 
         #embedBox {
             width: 100%;
@@ -118,16 +127,16 @@
 
         iframe { width: 100%; height: 100%; border: none; }
 
-        /* Loader Animation */
+        /* Loader */
         #loader {
             display: none;
-            margin: 20px;
-            border: 4px solid #f3f3f3;
+            margin: 40px;
+            border: 4px solid #e2e8f0;
             border-top: 4px solid var(--primary);
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -136,8 +145,8 @@
 <body>
 
     <header>
-        <h1>Calculator Toolbox</h1>
-        <p>Select a tool to launch it in the workspace below</p>
+        <h1>Academic Calculator Toolbox</h1>
+        <p>Dynamic results processing and serialization suite</p>
     </header>
 
     <div class="nav-grid">
@@ -150,7 +159,11 @@
         </div>
 
         <div class="tool-card" onclick="loadTool('Percentage Serializer', 'https://mizanuralrasid.github.io/Calculator/PercentageSerializer.html')">
-            <span class="dot bg-yellow"></span> Serializer Tool
+            <span class="dot bg-orange"></span> Percent Serializer
+        </div>
+
+        <div class="tool-card" onclick="loadTool('Serializer with Roll', 'https://mizanuralrasid.github.io/Calculator/PercentageSerializerWithRoll.html')">
+            <span class="dot bg-purple"></span> Serializer with Roll
         </div>
     </div>
 
@@ -173,29 +186,37 @@
             const title = document.getElementById('frameTitle');
             const loader = document.getElementById('loader');
 
-            // 1. Show loader, hide old content
+            // Show loader and clear current frame to prevent old content flickering
             loader.style.display = "block";
             workspace.style.display = "none";
+            frame.src = ""; 
 
-            // 2. Setup Frame
-            title.innerText = "Tool: " + name;
-            frame.src = url;
-
-            // 3. Scroll & Display (handled by onload)
+            // Set new content
+            setTimeout(() => {
+                title.innerText = name;
+                frame.src = url;
+            }, 100); 
         }
 
         function stopLoader() {
             const loader = document.getElementById('loader');
             const workspace = document.getElementById('workspace');
-            
-            loader.style.display = "none";
-            workspace.style.display = "block";
-            workspace.scrollIntoView({ behavior: 'smooth' });
+            const frame = document.getElementById('myFrame');
+
+            // Only show workspace if the frame actually has a URL loaded
+            if (frame.src !== "" && frame.src !== window.location.href) {
+                loader.style.display = "none";
+                workspace.style.display = "block";
+                workspace.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         function closeWorkspace() {
-            document.getElementById('workspace').style.display = "none";
-            document.getElementById('myFrame').src = "";
+            const workspace = document.getElementById('workspace');
+            const frame = document.getElementById('myFrame');
+            
+            workspace.style.display = "none";
+            frame.src = "";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
