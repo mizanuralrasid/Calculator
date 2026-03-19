@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Percentage Serializer</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background-color: #f4f7f6; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px; }
+        h2 { margin-top: 0; color: #333; font-size: 1.2rem; }
+        input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        ul { list-style: none; padding: 0; margin-top: 20px; }
+        li { padding: 8px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        li:first-child { font-weight: bold; color: #007bff; }
+        .rank { color: #888; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Percentage Serializer</h2>
+    <input type="number" id="percInput" placeholder="Enter % (e.g. 85)" min="0" max="100">
+    <button onclick="addPercentage()">Add & Sort</button>
+
+    <ul id="displayList"></ul>
+</div>
+
+<script>
+    let percentages = [];
+
+    function addPercentage() {
+        const input = document.getElementById('percInput');
+        const val = parseFloat(input.value);
+
+        if (isNaN(val)) return;
+
+        // 1. Add to array
+        percentages.push(val);
+
+        // 2. Sort Highest to Lowest
+        // We use (b - a) for descending order
+        percentages.sort((a, b) => b - a);
+
+        // 3. Update UI
+        renderList();
+
+        // 4. Clear input
+        input.value = '';
+        input.focus();
+    }
+
+    function renderList() {
+        const list = document.getElementById('displayList');
+        list.innerHTML = percentages.map((p, index) => `
+            <li>
+                <span>${p}%</span>
+                <span class="rank">Rank #${index + 1}</span>
+            </li>
+        `).join('');
+    }
+</script>
+
+</body>
+</html>
